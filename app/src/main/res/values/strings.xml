@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Al-Quran</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="al_quran">Al Quran - القرأن الكريم</string>
+    <string name="this_is_the_book_there_is_no_doubt_in_it_a_guidance_to_the_godwary">Quran is the book,there is no doubt in it, a guidance to the godwary</string>
+    <string name="surah">Surah</string>
+    <string name="para">Para</string>
+    <string name="page">Page</string>
+    <string name="hijb">Hijb</string>
+    <string name="al_fatiah">Al-Fatiah</string>
+    <string name="_7_verses">7 VERSES</string>
+    <string name="meccan">MECCAN</string>
+    <string name="al">الفاتحة</string>
+</resources>
