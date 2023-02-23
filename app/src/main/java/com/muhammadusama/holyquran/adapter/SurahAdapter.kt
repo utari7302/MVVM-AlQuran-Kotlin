@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.muhammadusama.holyquran.R
@@ -11,9 +13,10 @@ import com.muhammadusama.holyquran.databinding.SurahItemLayoutBinding
 import com.muhammadusama.holyquran.models.Data
 
 class SurahAdapter(val itemsList: List<Data>,val context:Context):
-    RecyclerView.Adapter<SurahAdapter.SurahViewHolder>() {
+    RecyclerView.Adapter<SurahAdapter.SurahViewHolder>(),Filterable {
 
     private lateinit var binding: SurahItemLayoutBinding
+    var surahListFiltered: List<Data> = itemsList
 
         // For simple implementation
 //    class SurahViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -53,11 +56,39 @@ class SurahAdapter(val itemsList: List<Data>,val context:Context):
 //        holder.surahNameArabic.text = itemsList[position].name.toString()
 
         // With Data Binding
-        val surahList = itemsList[position]
+        val surahList = surahListFiltered[position]
         holder.bind(surahList)
     }
 
     override fun getItemCount(): Int {
-        return itemsList.size
+        return surahListFiltered.size
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter(){
+            override fun performFiltering(p0: CharSequence?): FilterResults {
+                val charString = p0.toString() ?: ""
+                surahListFiltered = if(charString.isEmpty()) {
+                    itemsList
+                }else{
+                    val resultList : ArrayList<Data> = ArrayList()
+                    for(row in itemsList){
+                        if(row.englishName.lowercase().contains(charString.lowercase()) or row.number.toString().contains(charString)){
+                            resultList.add(row)
+                        }
+                    }
+                    resultList
+                }
+                val filterResult = FilterResults()
+                filterResult.values = surahListFiltered
+                return  filterResult
+            }
+
+            override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
+                surahListFiltered = p1?.values as List<Data>
+                notifyDataSetChanged()
+            }
+
+        }
     }
 }

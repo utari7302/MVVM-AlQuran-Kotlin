@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.HolyQuran" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="Theme.HolyQuran" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/darkBlue</item>
         <item name="colorPrimaryVariant">@color/darkBlue</item>

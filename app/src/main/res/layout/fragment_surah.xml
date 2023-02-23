@@ -3,8 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.SurahFragment">
+
+    <EditText
+        android:id="@+id/searchText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_3sdp"
+        android:padding="@dimen/_5sdp"
+        android:textCursorDrawable="@color/lightBlue"
+        android:background="@drawable/bg_edit_text"
+        android:hint="@string/search_by_surah_name_number"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/surahRecyclerView"

@@ -12,4 +12,5 @@
     <string name="_7_verses">7 VERSES</string>
     <string name="meccan">MECCAN</string>
     <string name="al">الفاتحة</string>
+    <string name="search_by_surah_name_number">Search by name/number</string>
 </resources>
