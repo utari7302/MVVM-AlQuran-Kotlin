@@ -10,5 +10,5 @@ interface QuranApi {
 
     // Get Quran Surah
     @GET(Constants.GET_SURAH)
-    suspend fun getSurah(): SurahList
+    fun getSurah(): Call<SurahList>
 }
