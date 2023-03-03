@@ -1,5 +1,6 @@
 package com.muhammadusama.holyquran.viewmodels
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.muhammadusama.holyquran.models.Data
 import com.muhammadusama.holyquran.models.SurahList
@@ -11,7 +12,15 @@ import javax.inject.Inject
 class SurahViewModel @Inject constructor (private val surahRepositoryImplementation: SurahRepositoryImplementation):
     ViewModel() {
 
-    suspend fun getSurahFromRepository():SurahList{
-        return surahRepositoryImplementation.getQuranSurah()
+    var failureMessage: MutableLiveData<String> = MutableLiveData()
+    var objResponse: MutableLiveData<SurahList> = MutableLiveData()
+
+    init {
+        failureMessage = surahRepositoryImplementation.failureMessage
+        objResponse = surahRepositoryImplementation.objResponse
+    }
+
+    suspend fun getSurahFromRepository(){
+        objResponse = surahRepositoryImplementation.getQuranSurah()
     }
 }

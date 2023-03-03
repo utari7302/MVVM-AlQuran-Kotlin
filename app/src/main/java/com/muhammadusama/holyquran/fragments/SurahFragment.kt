@@ -9,10 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.muhammadusama.holyquran.R
 import com.muhammadusama.holyquran.adapter.SurahAdapter
+import com.muhammadusama.holyquran.models.SurahList
 import com.muhammadusama.holyquran.viewmodels.SurahViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -44,13 +46,15 @@ class SurahFragment : Fragment() {
         searchText = view!!.findViewById(R.id.searchText)
         surahViewModel = ViewModelProvider(requireActivity())[SurahViewModel::class.java]
 
+
         uiScope.launch(Dispatchers.IO){
             withContext(Dispatchers.Main){
                 try{
-                    val response = surahViewModel.getSurahFromRepository()
-                    surahAdapter = SurahAdapter(response.data,requireActivity())
-                    recyclerView.adapter = surahAdapter
-
+                    surahViewModel.getSurahFromRepository()
+                    surahViewModel.objResponse.observe(viewLifecycleOwner, Observer {
+                        surahAdapter = SurahAdapter(it.data,requireActivity())
+                        recyclerView.adapter = surahAdapter
+                    })
                 }catch (e:Exception){
                     Log.d("OSAMA", e.message.toString())
                 }
