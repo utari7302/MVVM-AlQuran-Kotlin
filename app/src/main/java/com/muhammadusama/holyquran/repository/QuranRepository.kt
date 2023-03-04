@@ -9,9 +9,7 @@ import javax.inject.Inject
 interface QuranRepository {
 
     // List of functions that communicate with different endpoints
-    suspend fun getQuranSurah():MutableLiveData<SurahList> {
-        return null!!
-    }
+    suspend fun getQuranSurah()
 
     suspend fun getQuranSurahById():List<Data>{
         return emptyList()

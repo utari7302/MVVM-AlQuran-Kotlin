@@ -21,6 +21,6 @@ class SurahViewModel @Inject constructor (private val surahRepositoryImplementat
     }
 
     suspend fun getSurahFromRepository(){
-        objResponse = surahRepositoryImplementation.getQuranSurah()
+        surahRepositoryImplementation.getQuranSurah()
     }
 }
