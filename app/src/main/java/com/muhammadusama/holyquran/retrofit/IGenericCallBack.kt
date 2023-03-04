@@ -4,9 +4,9 @@ import android.net.Uri
 
 interface IGenericCallBack {
 
-    fun success(apiName: String, response: Any?)
+    suspend fun success(apiName: String, response: Any?)
 
-    fun failure(apiName: String, message: String?)
+    suspend fun failure(apiName: String, message: String?)
 
 }
 

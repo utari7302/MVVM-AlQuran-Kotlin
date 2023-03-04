@@ -3,6 +3,9 @@ package com.muhammadusama.holyquran.retrofit
 import com.google.gson.GsonBuilder
 import com.muhammadusama.holyquran.models.GeneralResponseModel
 import com.muhammadusama.holyquran.utils.Constants
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,7 +25,10 @@ object SingleEnqueueCall {
             override fun onResponse(call: Call<T>, response: Response<T>) {
                 if(response.isSuccessful){
                     retryCount = 0
-                    apiListener.success(apiName,response.body())
+                    CoroutineScope(Dispatchers.IO).launch {
+                        apiListener.success(apiName,response.body())
+                    }
+
                 }else{
                     when{
                         response.code() == 401 -> {
@@ -34,18 +40,30 @@ object SingleEnqueueCall {
                             val gson = GsonBuilder().create()
                             try {
                                 val errorModel: GeneralResponseModel= gson.fromJson(response.errorBody()!!.toString(), GeneralResponseModel::class.java)
-                                apiListener.failure(apiName,errorModel.messages)
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    apiListener.failure(apiName,errorModel.messages)
+                                }
+
                             }catch (ex: Exception){
                                 ex.printStackTrace()
-                                apiListener.failure(apiName,Constants.CONST_SERVER_NOT_RESPONDING)
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    apiListener.failure(apiName,Constants.CONST_SERVER_NOT_RESPONDING)
+                                }
+
                             }
 
                         }catch (e: IOException){
                             e.printStackTrace()
-                            apiListener.failure(apiName,Constants.CONST_SERVER_NOT_RESPONDING)
+                            CoroutineScope(Dispatchers.IO).launch {
+                                apiListener.failure(apiName,Constants.CONST_SERVER_NOT_RESPONDING)
+                            }
+
                         }
                         else -> {
-                            apiListener.failure(apiName,Constants.CONST_SERVER_NOT_RESPONDING)
+                            CoroutineScope(Dispatchers.IO).launch {
+                                apiListener.failure(apiName,Constants.CONST_SERVER_NOT_RESPONDING)
+                            }
+
                             return
                         }
                     }
@@ -59,7 +77,10 @@ object SingleEnqueueCall {
                         enqueueWithRetry(call, callBack, isLoaderShown)
                     }else{
                         retryCount = 0
-                        apiListener.failure(apiName, t.toString())
+                        CoroutineScope(Dispatchers.IO).launch {
+                            apiListener.failure(apiName, t.toString())
+                        }
+
                     }
                 }else{
                     retryCount = 0

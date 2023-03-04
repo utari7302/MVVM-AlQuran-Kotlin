@@ -52,7 +52,7 @@ class SurahFragment : Fragment() {
                 try{
                     surahViewModel.getSurahFromRepository()
                     surahViewModel.objResponse.observe(viewLifecycleOwner, Observer {
-                        surahAdapter = SurahAdapter(it.data,requireActivity())
+                        surahAdapter = SurahAdapter(it,requireActivity())
                         recyclerView.adapter = surahAdapter
                     })
                 }catch (e:Exception){

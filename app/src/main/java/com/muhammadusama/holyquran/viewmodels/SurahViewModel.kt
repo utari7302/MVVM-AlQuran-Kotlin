@@ -13,7 +13,7 @@ class SurahViewModel @Inject constructor (private val surahRepositoryImplementat
     ViewModel() {
 
     var failureMessage: MutableLiveData<String> = MutableLiveData()
-    var objResponse: MutableLiveData<SurahList> = MutableLiveData()
+    var objResponse: MutableLiveData<List<Data>> = MutableLiveData()
 
     init {
         failureMessage = surahRepositoryImplementation.failureMessage

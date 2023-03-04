@@ -10,7 +10,7 @@ import com.muhammadusama.holyquran.models.Data
 interface SurahDao {
 
     @Query("SELECT * FROM QuranSurah")
-    fun getQuranSurahList(): Data
+    suspend fun getQuranSurahList(): List<Data>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addQuranSurahListInDB(quranSurah: List<Data>)
