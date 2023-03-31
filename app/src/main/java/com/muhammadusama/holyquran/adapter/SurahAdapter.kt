@@ -2,17 +2,14 @@ package com.muhammadusama.holyquran.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.muhammadusama.holyquran.R
 import com.muhammadusama.holyquran.databinding.SurahItemLayoutBinding
 import com.muhammadusama.holyquran.models.Data
 
-class SurahAdapter(val itemsList: List<Data>,val context:Context):
+class SurahAdapter(val itemsList: List<Data>,val context:Context,val mListener: SurahItemClickListener):
     RecyclerView.Adapter<SurahAdapter.SurahViewHolder>(),Filterable {
 
     private lateinit var binding: SurahItemLayoutBinding
@@ -31,8 +28,10 @@ class SurahAdapter(val itemsList: List<Data>,val context:Context):
     class SurahViewHolder(
         private val binding: SurahItemLayoutBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(surahData: Data) {
+        fun bind(surahData: Data,listener: SurahItemClickListener) {
             binding.surahItem = surahData
+            binding.surahItemClick = listener
+            binding.executePendingBindings()
         }
     }
 
@@ -57,11 +56,15 @@ class SurahAdapter(val itemsList: List<Data>,val context:Context):
 
         // With Data Binding
         val surahList = surahListFiltered[position]
-        holder.bind(surahList)
+        holder.bind(surahList,mListener)
     }
 
     override fun getItemCount(): Int {
         return surahListFiltered.size
+    }
+
+    interface SurahItemClickListener{
+        fun onSurahItemClicked(data: Data)
     }
 
     override fun getFilter(): Filter {

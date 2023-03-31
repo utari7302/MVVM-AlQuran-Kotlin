@@ -18,5 +18,18 @@
         android:id="@+id/homeFragment"
         android:name="com.muhammadusama.holyquran.fragments.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.muhammadusama.holyquran.fragments.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="surah"
+            app:argType="com.muhammadusama.holyquran.models.Data" />
+    </fragment>
 </navigation>

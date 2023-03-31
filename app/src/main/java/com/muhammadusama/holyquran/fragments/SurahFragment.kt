@@ -4,23 +4,26 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.muhammadusama.holyquran.R
 import com.muhammadusama.holyquran.adapter.SurahAdapter
-import com.muhammadusama.holyquran.models.SurahList
+import com.muhammadusama.holyquran.models.Data
 import com.muhammadusama.holyquran.viewmodels.SurahViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 
 @AndroidEntryPoint
-class SurahFragment : Fragment() {
+class SurahFragment : Fragment(),SurahAdapter.SurahItemClickListener {
 
     lateinit var recyclerView: RecyclerView
     lateinit var searchText:EditText
@@ -52,7 +55,7 @@ class SurahFragment : Fragment() {
                 try{
                     surahViewModel.getSurahFromRepository()
                     surahViewModel.objResponse.observe(viewLifecycleOwner, Observer {
-                        surahAdapter = SurahAdapter(it,requireActivity())
+                        surahAdapter = SurahAdapter(it,requireActivity(),(this@SurahFragment))
                         recyclerView.adapter = surahAdapter
                     })
                 }catch (e:Exception){
@@ -82,5 +85,14 @@ class SurahFragment : Fragment() {
     override fun onDestroy(){
         job.cancel()
         super.onDestroy()
+    }
+
+    override fun onSurahItemClicked(data: Data) {
+
+        Toast.makeText(requireActivity(), "Your Text Here! "+data.number, Toast.LENGTH_SHORT).show()
+        //val result = SurahFragmentDirection
+        val bundle = bundleOf("data" to data)
+        findNavController().navigate(R.id.action_homeFragment_to_detailFragment,bundle)
+
     }
 }
